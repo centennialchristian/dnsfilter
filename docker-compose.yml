@@ -1,0 +1,24 @@
+services:
+  pihole:
+    container_name: "pihole"
+    image: "docker.io/pihole/pihole:latest"
+    hostname: "pihole"
+    ports:
+      - "53:53/tcp"
+      - "${IPBIND}:53:53/udp"
+      - "${IPBIND}:80:80/tcp"
+    env_file:
+      - ".env"
+    environment:
+      TZ: "America/Vancouver"
+      WEBPASSWORD: "${WEBPASS}"
+      PIHOLE_DNS_: "${UP_DNS}"
+      DNSSEC: true
+      DHCP_ACTIVE: false
+      VIRTUAL_HOST: "${VIRT_HOST}"
+      WEB_THEME: "default_dark"
+      WEB_LOGS_STDOUT: 1
+    volumes:
+      - "./etc-pihole:/etc/pihole"
+      - "./etc-dnsmasq.d:/etc/dnsmasq.d"
+

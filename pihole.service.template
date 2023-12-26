@@ -1,0 +1,14 @@
+[Unit]
+Description=piHole
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStartPre=/usr/local/bin/podman-compose down
+ExecStart=/usr/local/bin/podman-compose up
+ExecStop=/usr/local/bin/podman-compose down
+WorkingDirectory=%DNSFILTERDIR%
+
+[Install]
+WantedBy=multi-user.target
